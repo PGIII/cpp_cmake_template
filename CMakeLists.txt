@@ -33,6 +33,15 @@ function(AddModuleTest MODULE_NAME)
   catch_discover_tests(${MODULE_NAME}_test)
 endfunction()
 
+# This should be used for modules that are header only 
+function(AddHeaderModuleTest MODULE_NAME)
+  add_executable(${MODULE_NAME}_test ${CMAKE_CURRENT_LIST_DIR}/${MODULE_NAME}.test.cpp)
+  target_include_directories(${MODULE_NAME}_test
+                             PRIVATE ${CMAKE_CURRENT_LIST_DIR})
+  target_link_libraries(${MODULE_NAME}_test PRIVATE Catch2::Catch2WithMain)
+  catch_discover_tests(${MODULE_NAME}_test)
+endfunction()
+
 # Both of these will have a CMakelists that tells us what needs to be built
 add_subdirectory(src)
 add_subdirectory(test)
